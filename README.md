@@ -1,4 +1,4 @@
-# PTTM - Pomodoro Terminal Timer & Manager
+# PTTM - Pomodoro Timer & Task Manager
 
 PTTM is a terminal-based Pomodoro app built with [Textual](https://textual.textualize.io/). It provides a timer, task tracking, and configurable work/break settings in a compact TUI.
 
@@ -16,24 +16,26 @@ PTTM is a terminal-based Pomodoro app built with [Textual](https://textual.textu
 
 ## Installation
 
-Install the dependencies from the project root:
+You can install the application globally from PyPI using [pipx](https://github.com/pypa/pipx):
 
 ```bash
-pip install -r requirements.txt
+pipx install pttm
+```
+
+To install it locally for development, clone the repository and install it in editable mode:
+
+```bash
+git clone https://github.com/Shru-10p/pttm.git
+cd pttm
+pipx install -e .
 ```
 
 ## Run
 
-From the repository root, start the app with:
+Start the app with:
 
 ```bash
-python pttm.py
-```
-
-You can also run the app module directly:
-
-```bash
-python -m pttm.app
+pttm
 ```
 
 ## Keyboard Shortcuts
@@ -51,29 +53,13 @@ python -m pttm.app
 
 ## Configuration
 
-The app reads and writes a JSON config file. By default, the file is stored in your user config directory. You can override the location by setting `PMO_CONFIG_PATH` before launch.
+The app reads and writes a JSON config file. By default, the file is stored in your user config directory. You can override the location by setting `PTTM_CONFIG_PATH` before launch.
 
 Example:
 
 ```bash
-export PMO_CONFIG_PATH=./pmo_config.json
-python pttm.py
+export PTTM_CONFIG_PATH=./pttm_config.json
+pttm
 ```
 
 The config includes timer settings, completed focus session count, and task data.
-
-## Tests
-
-Run the test suite with:
-
-```bash
-python -m unittest test_pttm.py
-```
-
-## Project Layout
-
-- `pttm/app.py` application entry point
-- `pttm/config.py` config load/save helpers
-- `pttm/clock.py` ASCII clock rendering
-- `pttm/widgets/` UI components
-- `pttm/pttm.css` Textual stylesheet

@@ -2,7 +2,7 @@ import json
 import os
 import platformdirs
 
-CONFIG_PATH_ENV = os.getenv("PMO_CONFIG_PATH")
+CONFIG_PATH_ENV = os.getenv("PTTM_CONFIG_PATH")
 if CONFIG_PATH_ENV:
     CONFIG_FILE = CONFIG_PATH_ENV
 else:
