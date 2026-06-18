@@ -3,20 +3,20 @@ from textual.widget import Widget
 from textual.app import ComposeResult
 from textual.widgets import Label, Input
 from textual.containers import Horizontal, VerticalScroll
-from pmo.widgets.task_item import TaskItem
-from pmo.config import save_config
+from pttm.widgets.task_item import TaskItem
+from pttm.config import save_config
 
 class TaskListWidget(Widget):
     """Widget to display the todo list and manage tasks."""
 
     def compose(self) -> ComposeResult:
-        yield Label("TODO LIST", id="todo-title")
+        yield Label("TASK LIST", id="todo-title")
 
         with Horizontal(id="todo-input-row"):
             yield Input(placeholder="Add a new task...", id="new-task-input")
 
         yield VerticalScroll(id="tasks-container")
-        yield Label("Space: check | Enter/f: focus | e: edit | d: delete", id="todo-help")
+        # yield Label("Space: check | Enter/f: focus | e: edit | d: delete", id="todo-help")
 
     def on_mount(self) -> None:
         self.refresh_tasks()

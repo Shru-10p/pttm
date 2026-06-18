@@ -1,31 +1,105 @@
-# Antigravity Pomodoro TUI
+# PTTM - Pomodoro Timer & Task Manager
 
-A beautiful, highly-customizable, and colourful Pomodoro app with an integrated Todo system, written in Python using the modern `textual` terminal framework.
+A beautiful, highly customizable, and colorful Pomodoro timer with an integrated Todo system, built for the terminal using Python's modern `textual` framework.
+
+## Screenshots
+
+| Focus Mode | Settings & Todo List |
+| --- | --- |
+| ![Focus Phase](docs/screenshots/focus.png) | ![Settings and Todo](docs/screenshots/settings.png) |
+
+---
 
 ## Features
 
-- **Dynamic Visual Themes**: Beautiful Catppuccin-themed interfaces that dynamically change their border and clock colors depending on the active state (Crimson for Focus, Green for Short Break, Blue for Long Break).
-- **Retro ASCII Art Clock**: Displays a large digital countdown clock using character blocks.
+- **Dynamic Catppuccin Themes**: Beautiful, responsive interfaces that shift colors dynamically based on the current timer phase (Crimson for Focus, Green for Short Break, Blue for Long Break).
+- **Retro ASCII Art Clock**: A large, easy-to-read digital countdown clock rendered with character blocks.
 - **Integrated Todo System**:
-  - Add tasks instantly with the add form.
-  - Select/deselect an active task to link with your focus session.
-  - Visual strikethrough for completed tasks.
-  - Track completed focus sessions per-task (e.g. `🍅 x 3`).
-- **Fully Customizable Sessions**: Edit Focus duration, Short Break, Long Break, and long break interval (number of focus cycles) on-the-fly in the **Settings** tab.
-- **Config Persistence**: Automatically saves and loads your settings, completed session count, and todo tasks locally inside a JSON file (`pmo_config.json`).
-- **Notification Popups & Sound Alerts**: Displays terminal popups upon phase completion and triggers an audible/visual bell to alert you.
+  - Add tasks instantly from within the application.
+  - Link any active task to your current focus session.
+  - Track completed focus sessions per-task.
+  - Visual completion states (with clean strikethrough styling).
+- **Fully Customizable Sessions**: Edit Focus duration, Short Break, Long Break, and long break intervals on-the-fly via the Settings tab.
+- **Config Persistence**: Automatically saves and loads your settings, session counts, and task list locally.
+- **Notifications & Sound Alerts**: Dispatches terminal popups and plays an audio bell when a phase transitions.
 
-## Getting Started
+---
 
-1. **Activate the Virtual Environment & Run**:
+## Installation
+
+The recommended way to install and run **pttm** as a standalone application is using [pipx](https://github.com/pypa/pipx):
+
+```bash
+pipx install pttm
+```
+
+Alternatively, you can install it using standard pip (preferably in a virtual environment):
+
+```bash
+pip install pttm
+```
+
+---
+
+## Usage
+
+Once installed, simply launch the application from your terminal:
+
+```bash
+ts-pmo
+```
+
+### Keybindings
+
+| Key | Action |
+| --- | --- |
+| `s` | **Start / Pause** the timer |
+| `r` | **Reset** the current session's timer |
+| `k` | **Skip** the current phase (instantly transition to the next phase) |
+| `t` | **Focus** on the Todo input field |
+| `q` | **Quit** the application |
+
+---
+
+## Configuration
+
+Your settings, tasks, and history are persisted locally in `pttm_config.json`. This file is loaded automatically on startup, so you never lose your progress or custom configurations.
+
+---
+
+## Development
+
+If you want to run the application from source or contribute to development:
+
+1. Clone the repository:
+
    ```bash
-   ./.venv/bin/python pmo.py
+   git clone https://github.com/yourusername/pmo.git
+   cd pmo
    ```
 
-## Keybindings
+2. Create a virtual environment and install dependencies:
 
-- `q` : **Quit** the application.
-- `s` : **Start / Pause** the timer.
-- `r` : **Reset** the timer to the beginning of the current mode.
-- `k` : **Skip** the current session (completes it and transitions to the next phase).
-- `t` : **Focus** on the Todo text input field.
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate
+   pip install -e .
+   ```
+
+3. Run the development wrapper
+
+   ```bash
+   python pmo.py
+   ```
+
+4. Run the test suite:
+
+   ```bash
+   python -m unittest -v
+   ```
+
+---
+
+## License
+
+This project is licensed under the MIT License.

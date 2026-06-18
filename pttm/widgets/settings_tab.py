@@ -2,7 +2,7 @@ from textual.widget import Widget
 from textual.app import ComposeResult
 from textual.widgets import Label, Input, Button
 from textual.containers import Horizontal, VerticalScroll
-from pmo.config import save_config
+from pttm.config import save_config
 
 class SettingsTab(Widget):
     def compose(self) -> ComposeResult:

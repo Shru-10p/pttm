@@ -354,7 +354,7 @@ TaskItem.active-task .task-select-btn {
     background: #181825;
     border: double #cba6f7;
     padding: 2 4;
-    max-width: 80;
+    max-width: 1fr;
     align: center middle;
     margin: 2 4;
 }
@@ -442,9 +442,9 @@ ShortcutsScreen {
 
 #shortcuts-dialog {
     width: 90%;
-    max-width: 60;
+    max-width: 80;
     height: 90%;
-    max-height: 19;
+    max-height: 28;
     background: #181825;
     border: double #cba6f7;
     padding: 1 2;
@@ -481,5 +481,3 @@ ShortcutsScreen {
     color: #a6adc8;
     margin-top: 1;
 }
-
-

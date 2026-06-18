@@ -2,8 +2,8 @@ from textual.widget import Widget
 from textual.app import ComposeResult
 from textual.widgets import Label, Static
 from textual.reactive import reactive
-from pmo.clock import make_clock_ascii
-from pmo.config import save_config
+from pttm.clock import make_clock_ascii
+from pttm.config import save_config
 
 MODE_CONFIG_KEYS = {
     "Focus": "focus_time",

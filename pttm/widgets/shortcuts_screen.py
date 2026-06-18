@@ -8,11 +8,11 @@ class ShortcutsScreen(ModalScreen):
         ("escape", "dismiss_dialog", "Close"),
         ("ctrl+p", "dismiss_dialog", "Close"),
     ]
-    
+
     def compose(self) -> ComposeResult:
         with Vertical(id="shortcuts-dialog"):
             yield Label("KEYBOARD SHORTCUTS", id="shortcuts-title")
-            
+
             with VerticalScroll(id="shortcuts-content"):
                 yield Label("[bold]Global Controls[/bold]", classes="section-header")
                 yield Label("  q         - Quit App", classes="shortcut-entry")
@@ -25,7 +25,7 @@ class ShortcutsScreen(ModalScreen):
                 yield Label("  b         - Switch to Long Break", classes="shortcut-entry")
                 yield Label("  t         - Focus Todo Creation Box", classes="shortcut-entry")
                 yield Label("  Ctrl+P    - Toggle Keyboard Shortcuts", classes="shortcut-entry")
-                
+
                 yield Label("", classes="spacer")
                 yield Label("[bold]Todo Checklist Controls[/bold]", classes="section-header")
                 yield Label("  Tab       - Navigate through checklist", classes="shortcut-entry")
@@ -33,8 +33,8 @@ class ShortcutsScreen(ModalScreen):
                 yield Label("  Enter / f - Set task as active target", classes="shortcut-entry")
                 yield Label("  e         - Rename task title inline", classes="shortcut-entry")
                 yield Label("  d         - Delete task from checklist", classes="shortcut-entry")
-                
+
             yield Label("[ Close [esc] ]", id="shortcuts-close-btn")
-            
+
     def action_dismiss_dialog(self) -> None:
         self.dismiss()

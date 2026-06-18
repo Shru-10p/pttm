@@ -1,15 +1,16 @@
 import json
+import os
 from textual.app import App, ComposeResult
 from textual.widgets import Header, TabbedContent, TabPane, Label, Input
-from pmo.config import load_config, save_config
-from pmo.widgets.dashboard import Dashboard
-from pmo.widgets.settings_tab import SettingsTab
-from pmo.widgets.shortcuts_screen import ShortcutsScreen
-from pmo.widgets.timer_widget import TimerWidget
-from pmo.widgets.task_list_widget import TaskListWidget
+from pttm.config import load_config, save_config
+from pttm.widgets.dashboard import Dashboard
+from pttm.widgets.settings_tab import SettingsTab
+from pttm.widgets.shortcuts_screen import ShortcutsScreen
+from pttm.widgets.timer_widget import TimerWidget
+from pttm.widgets.task_list_widget import TaskListWidget
 
 class PomodoroApp(App):
-    CSS_PATH = "../pmo.css"
+    CSS_PATH = "pmo.css"
     TITLE = "TS PMO"
     COMMANDS = set()
     ENABLE_COMMAND_PALETTE = False
@@ -30,16 +31,28 @@ class PomodoroApp(App):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.config = load_config()
-        # Log config to startup file
-        with open("pmo_startup.log", "w") as f:
-            f.write(json.dumps(self.config, indent=4))
+        # Log config to startup file next to config file
+        from pttm.config import CONFIG_FILE
+        log_dir = os.path.dirname(CONFIG_FILE)
+        if log_dir:
+            os.makedirs(log_dir, exist_ok=True)
+            log_file = os.path.join(log_dir, "pmo_startup.log")
+        else:
+            log_file = "pmo_startup.log"
+        try:
+            with open(log_file, "w") as f:
+                f.write(json.dumps(self.config, indent=4))
+        except Exception:
+            pass
         self.active_task_id = None
 
     def compose(self) -> ComposeResult:
         # yield Header(show_clock=True)
-        with TabbedContent(initial="dashboard-tab"):
-            with TabPane("Timer & Tasks", id="dashboard-tab"):
-                yield Dashboard()
+        with TabbedContent(initial="timer-tab"):
+            with TabPane("Timer", id="timer-tab"):
+                yield TimerWidget()
+            with TabPane("Tasks", id="tasks-tab"):
+                yield TaskListWidget()
             with TabPane("Settings", id="settings-tab"):
                 yield SettingsTab()
 

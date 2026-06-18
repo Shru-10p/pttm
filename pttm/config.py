@@ -1,7 +1,13 @@
 import json
 import os
+import platformdirs
 
-CONFIG_FILE = "pmo_config.json"
+CONFIG_PATH_ENV = os.getenv("PMO_CONFIG_PATH")
+if CONFIG_PATH_ENV:
+    CONFIG_FILE = CONFIG_PATH_ENV
+else:
+    CONFIG_DIR = platformdirs.user_config_dir("pttm", appauthor=False)
+    CONFIG_FILE = os.path.join(CONFIG_DIR, "pttm_config.json")
 
 DEFAULT_CONFIG = {
     "settings": {
@@ -12,9 +18,9 @@ DEFAULT_CONFIG = {
     },
     "completed_focus_sessions": 0,
     "tasks": [
-        {"id": "1", "title": "Implement beautiful TUI layout", "completed": True, "pomodoros": 1},
-        {"id": "2", "title": "Integrate Pomodoro session switching", "completed": False, "pomodoros": 0},
-        {"id": "3", "title": "Test configuration persistence", "completed": False, "pomodoros": 0}
+        {"id": "1", "title": "Task 1", "completed": True, "pomodoros": 1},
+        {"id": "2", "title": "Task 2", "completed": False, "pomodoros": 0},
+        {"id": "3", "title": "Task 3", "completed": False, "pomodoros": 0}
     ]
 }
 
@@ -37,7 +43,11 @@ def load_config():
 
 def save_config(config):
     try:
+        dir_name = os.path.dirname(CONFIG_FILE)
+        if dir_name:
+            os.makedirs(dir_name, exist_ok=True)
         with open(CONFIG_FILE, "w") as f:
             json.dump(config, f, indent=4)
     except Exception:
         pass
+
