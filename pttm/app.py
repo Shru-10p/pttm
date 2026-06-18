@@ -10,7 +10,7 @@ from pttm.widgets.timer_widget import TimerWidget
 from pttm.widgets.task_list_widget import TaskListWidget
 
 class PomodoroApp(App):
-    CSS_PATH = "pmo.css"
+    CSS_PATH = "pttm.css"
     TITLE = "TS PMO"
     COMMANDS = set()
     ENABLE_COMMAND_PALETTE = False

@@ -143,7 +143,7 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-# PMO local state and logs
-pmo_config.json
-pmo_config.json.bak
-pmo_startup.log
+# PTTM local state and logs
+pttm_config.json
+pttm_config.json.bak
+pttm_startup.log

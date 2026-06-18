@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pttm"
+version = "0.1.0"
+description = "Pomodoro Terminal Timer & Manager"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "linkify-it-py==2.1.0",
+    "markdown-it-py==4.2.0",
+    "mdit-py-plugins==0.6.1",
+    "mdurl==0.1.2",
+    "platformdirs==4.10.0",
+    "Pygments==2.20.0",
+    "rich==15.0.0",
+    "textual==8.2.7",
+    "typing_extensions==4.15.0",
+    "uc-micro-py==2.0.0"
+]
+
+[project.scripts]
+pttm = "pttm.app:main"
+
+[tool.setuptools.packages.find]
+include = ["pttm*"]
+
+[tool.setuptools.package-data]
+pttm = ["*.css"]

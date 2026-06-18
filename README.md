@@ -1,105 +1,79 @@
-# PTTM - Pomodoro Timer & Task Manager
+# PTTM - Pomodoro Terminal Timer & Manager
 
-A beautiful, highly customizable, and colorful Pomodoro timer with an integrated Todo system, built for the terminal using Python's modern `textual` framework.
-
-## Screenshots
-
-| Focus Mode | Settings & Todo List |
-| --- | --- |
-| ![Focus Phase](docs/screenshots/focus.png) | ![Settings and Todo](docs/screenshots/settings.png) |
-
----
+PTTM is a terminal-based Pomodoro app built with [Textual](https://textual.textualize.io/). It provides a timer, task tracking, and configurable work/break settings in a compact TUI.
 
 ## Features
 
-- **Dynamic Catppuccin Themes**: Beautiful, responsive interfaces that shift colors dynamically based on the current timer phase (Crimson for Focus, Green for Short Break, Blue for Long Break).
-- **Retro ASCII Art Clock**: A large, easy-to-read digital countdown clock rendered with character blocks.
-- **Integrated Todo System**:
-  - Add tasks instantly from within the application.
-  - Link any active task to your current focus session.
-  - Track completed focus sessions per-task.
-  - Visual completion states (with clean strikethrough styling).
-- **Fully Customizable Sessions**: Edit Focus duration, Short Break, Long Break, and long break intervals on-the-fly via the Settings tab.
-- **Config Persistence**: Automatically saves and loads your settings, session counts, and task list locally.
-- **Notifications & Sound Alerts**: Dispatches terminal popups and plays an audio bell when a phase transitions.
+- Pomodoro timer with focus, short break, and long break modes
+- Task list with per-task Pomodoro counts
+- Persistent configuration stored as JSON
+- Keyboard shortcuts for common timer and task actions
+- In-app settings tab for adjusting timing values
 
----
+## Requirements
+
+- Python 3.10 or newer
 
 ## Installation
 
-The recommended way to install and run **pttm** as a standalone application is using [pipx](https://github.com/pypa/pipx):
+Install the dependencies from the project root:
 
 ```bash
-pipx install pttm
+pip install -r requirements.txt
 ```
 
-Alternatively, you can install it using standard pip (preferably in a virtual environment):
+## Run
+
+From the repository root, start the app with:
 
 ```bash
-pip install pttm
+python pttm.py
 ```
 
----
-
-## Usage
-
-Once installed, simply launch the application from your terminal:
+You can also run the app module directly:
 
 ```bash
-ts-pmo
+python -m pttm.app
 ```
 
-### Keybindings
+## Keyboard Shortcuts
 
-| Key | Action |
-| --- | --- |
-| `s` | **Start / Pause** the timer |
-| `r` | **Reset** the current session's timer |
-| `k` | **Skip** the current phase (instantly transition to the next phase) |
-| `t` | **Focus** on the Todo input field |
-| `q` | **Quit** the application |
-
----
+- `q` quit
+- `s` start or pause the timer
+- `r` reset the current timer
+- `ctrl+r` reset the full session
+- `k` skip to the next timer mode
+- `f` switch to focus mode
+- `g` switch to short break mode
+- `b` switch to long break mode
+- `t` focus the new task input
+- `ctrl+p` show or hide the shortcuts screen
 
 ## Configuration
 
-Your settings, tasks, and history are persisted locally in `pttm_config.json`. This file is loaded automatically on startup, so you never lose your progress or custom configurations.
+The app reads and writes a JSON config file. By default, the file is stored in your user config directory. You can override the location by setting `PMO_CONFIG_PATH` before launch.
 
----
+Example:
 
-## Development
+```bash
+export PMO_CONFIG_PATH=./pmo_config.json
+python pttm.py
+```
 
-If you want to run the application from source or contribute to development:
+The config includes timer settings, completed focus session count, and task data.
 
-1. Clone the repository:
+## Tests
 
-   ```bash
-   git clone https://github.com/yourusername/pmo.git
-   cd pmo
-   ```
+Run the test suite with:
 
-2. Create a virtual environment and install dependencies:
+```bash
+python -m unittest test_pttm.py
+```
 
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate
-   pip install -e .
-   ```
+## Project Layout
 
-3. Run the development wrapper
-
-   ```bash
-   python pmo.py
-   ```
-
-4. Run the test suite:
-
-   ```bash
-   python -m unittest -v
-   ```
-
----
-
-## License
-
-This project is licensed under the MIT License.
+- `pttm/app.py` application entry point
+- `pttm/config.py` config load/save helpers
+- `pttm/clock.py` ASCII clock rendering
+- `pttm/widgets/` UI components
+- `pttm/pttm.css` Textual stylesheet
