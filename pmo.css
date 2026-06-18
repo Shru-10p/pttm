@@ -1,0 +1,485 @@
+/* App wide styling */
+Screen {
+    background: #11111b; /* deep obsidian navy */
+    min-width: 80;
+    min-height: 24;
+}
+
+/* Tabs */
+TabbedContent {
+    background: #11111b;
+    height: 1fr;
+}
+
+TabPane {
+    padding: 1 1;
+    background: #11111b;
+    height: 1fr;
+}
+
+Tabs {
+    background: #1e1e2e;
+    color: #cdd6f4;
+}
+
+Tabs:focus {
+    background: #313244;
+}
+
+Tab {
+    background: #1e1e2e;
+    color: #a6adc8;
+}
+
+Tab:hover {
+    background: #313244;
+    color: #f5c2e7;
+}
+
+Tab.--active {
+    background: #11111b;
+    color: #cba6f7;
+    text-style: bold;
+}
+
+/* Dashboard Columns */
+Dashboard {
+    width: 100%;
+    height: 1fr;
+    layout: horizontal;
+}
+
+/* Timer Widget Styling */
+TimerWidget {
+    background: #181825;
+    border: double #cba6f7;
+    border-title-align: center;
+    border-title-style: bold;
+    padding: 1 2;
+    width: 1fr;
+    min-width: 38;
+    height: 1fr;
+    layout: vertical;
+    align: center middle;
+    margin-right: 2;
+}
+
+#timer-title {
+    text-align: center;
+    width: 100%;
+    height: 1;
+    color: #f5c2e7;
+    text-style: bold;
+    margin-bottom: 1;
+}
+
+#active-task-display {
+    text-align: center;
+    width: 100%;
+    height: 1;
+    color: #a6adc8;
+    margin-bottom: 1;
+}
+
+#timer-clock {
+    width: 100%;
+    height: 9;
+    content-align: center middle;
+    color: #cba6f7;
+    text-style: bold;
+    background: #1e1e2e;
+    border: solid #313244;
+    margin-bottom: 1;
+    padding: 1 1;
+}
+
+.timer-clock-active {
+    color: #f9e2af !important;
+    border: solid #f9e2af !important;
+}
+
+#timer-controls {
+    width: 100%;
+    height: 3;
+    align: center middle;
+    margin-bottom: 1;
+}
+
+#timer-controls Button {
+    margin: 0 1 0 0;
+    background: transparent;
+    border: none;
+    height: 1;
+    padding: 0;
+    color: #cdd6f4;
+}
+
+#start-btn {
+    width: 12;
+}
+
+#skip-btn {
+    width: 6;
+}
+
+#reset-btn {
+    width: 7;
+}
+
+#timer-controls Button:hover, #timer-controls Button:focus {
+    color: #f5c2e7;
+    text-style: underline bold;
+}
+
+#manual-modes {
+    width: 100%;
+    height: 3;
+    align: center middle;
+    margin-bottom: 1;
+}
+
+#manual-modes Button {
+    margin: 0 1 0 0;
+    background: transparent;
+    border: none;
+    height: 1;
+    padding: 0;
+    color: #cdd6f4;
+}
+
+#mode-focus-btn {
+    width: 7;
+}
+
+#mode-short-btn {
+    width: 7;
+}
+
+#mode-long-btn {
+    width: 6;
+}
+
+#manual-modes Button:hover, #manual-modes Button:focus {
+    color: #f5c2e7;
+    text-style: underline bold;
+}
+
+#session-count-display {
+    text-align: center;
+    width: 100%;
+    height: 1;
+    color: #f9e2af;
+    text-style: bold;
+}
+
+/* Hidden class for toggle button */
+.hidden {
+    display: none;
+}
+
+/* Todo Panel Styling */
+TaskListWidget {
+    background: #181825;
+    border: double #cba6f7;
+    padding: 1 1;
+    width: 1fr;
+    min-width: 38;
+    height: 1fr;
+    layout: vertical;
+}
+
+#todo-title {
+    text-align: center;
+    width: 100%;
+    height: 1;
+    color: #cba6f7;
+    text-style: bold;
+    margin-bottom: 1;
+}
+
+#todo-input-row {
+    width: 100%;
+    height: 3;
+    margin-bottom: 1;
+    align: left middle;
+}
+
+#new-task-input {
+    width: 1fr;
+    background: #1e1e2e;
+    color: #cdd6f4;
+    border: solid #313244;
+}
+
+#new-task-input:focus {
+    border: solid #cba6f7;
+}
+
+#add-task-btn {
+    background: transparent;
+    border: none;
+    height: 3;
+    width: auto;
+    padding: 0 1;
+    color: #cba6f7;
+    margin-left: 1;
+}
+
+#add-task-btn:hover, #add-task-btn:focus {
+    color: #f5c2e7;
+    text-style: underline bold;
+}
+
+#tasks-container {
+    width: 100%;
+    height: 1fr;
+    border: none;
+}
+
+/* Task Item Styling */
+TaskItem {
+    layout: horizontal;
+    align: left middle;
+    width: 100%;
+    height: 3;
+    margin-bottom: 1;
+    padding: 0 1;
+    background: #1e1e2e;
+    border: solid #313244;
+}
+
+TaskItem:hover {
+    background: #313244;
+}
+
+TaskItem.active-task {
+    background: #45475a;
+    border: double #f9e2af;
+}
+
+.task-title {
+    width: 1fr;
+    margin: 0 1;
+    color: #cdd6f4;
+}
+
+.task-title.completed {
+    text-style: strike;
+    color: #585b70;
+}
+
+.task-edit-input {
+    width: 1fr;
+    margin: 0 1;
+    height: 1;
+    border: none;
+    background: #313244;
+    color: #cdd6f4;
+    padding: 0 1;
+}
+
+.task-pomo {
+    width: auto;
+    margin-right: 1;
+    color: #f38ba8;
+}
+
+/* Sleek Text Link Button Styling */
+.task-check-btn, .task-edit-btn, .task-save-btn, .task-select-btn, .task-delete-btn {
+    background: transparent;
+    border: none;
+    height: 1;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.task-check-btn {
+    width: 3;
+    color: #89b4fa;
+    text-style: bold;
+}
+
+.task-check-btn:hover, .task-check-btn:focus {
+    color: #b4befe;
+}
+
+.task-edit-btn {
+    color: #a6e3a1;
+    margin-left: 1;
+    width: 6;
+}
+
+.task-edit-btn:hover, .task-edit-btn:focus {
+    text-style: underline;
+}
+
+.task-save-btn {
+    color: #a6e3a1;
+    margin-left: 1;
+    width: 6;
+}
+
+.task-save-btn:hover, .task-save-btn:focus {
+    text-style: underline;
+}
+
+.task-select-btn {
+    color: #cdd6f4;
+    margin-left: 1;
+    width: 10;
+}
+
+.task-select-btn:hover, .task-select-btn:focus {
+    text-style: underline;
+}
+
+TaskItem.active-task .task-select-btn {
+    color: #fab387;
+    text-style: bold;
+}
+
+.task-delete-btn {
+    color: #f38ba8;
+    margin-left: 1;
+    width: 5;
+}
+
+.task-delete-btn:hover, .task-delete-btn:focus {
+    text-style: underline;
+}
+
+/* Settings Styling */
+#settings-form {
+    background: #181825;
+    border: double #cba6f7;
+    padding: 2 4;
+    max-width: 80;
+    align: center middle;
+    margin: 2 4;
+}
+
+.settings-title {
+    text-align: center;
+    width: 100%;
+    height: 1;
+    color: #cba6f7;
+    text-style: bold;
+    margin-bottom: 2;
+}
+
+.settings-row {
+    width: 100%;
+    height: 3;
+    align: left middle;
+    margin-bottom: 1;
+}
+
+.settings-label {
+    width: 30;
+    color: #cdd6f4;
+}
+
+#settings-form Input {
+    width: 1fr;
+    background: #1e1e2e;
+    color: #cdd6f4;
+    border: solid #313244;
+}
+
+#settings-form Input:focus {
+    border: solid #cba6f7;
+}
+
+#save-settings-btn {
+    margin-top: 2;
+    background: transparent;
+    border: none;
+    height: 1;
+    width: auto;
+    padding: 0;
+    color: #cba6f7;
+    text-style: bold;
+}
+
+#save-settings-btn:hover, #save-settings-btn:focus {
+    color: #f5c2e7;
+    text-style: underline bold;
+}
+
+#settings-status {
+    text-align: center;
+    width: 100%;
+    height: 1;
+    margin-top: 1;
+    text-style: bold;
+}
+
+/* Focused Task Items & Todo Help */
+TaskItem:focus {
+    background: #313244;
+    border: solid #cba6f7;
+}
+
+TaskItem.active-task:focus {
+    background: #585b70;
+    border: double #f9e2af;
+}
+
+#todo-help {
+    text-align: center;
+    width: 100%;
+    height: 1;
+    color: #a6adc8;
+    margin-top: 1;
+}
+
+/* Keyboard Shortcuts Overlay Styling */
+ShortcutsScreen {
+    align: center middle;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+#shortcuts-dialog {
+    width: 90%;
+    max-width: 60;
+    height: 90%;
+    max-height: 19;
+    background: #181825;
+    border: double #cba6f7;
+    padding: 1 2;
+}
+
+#shortcuts-title {
+    text-align: center;
+    width: 100%;
+    height: 1;
+    color: #cba6f7;
+    text-style: bold;
+    margin-bottom: 1;
+}
+
+#shortcuts-content {
+    width: 100%;
+    height: 1fr;
+    margin-bottom: 1;
+}
+
+.section-header {
+    color: #f5c2e7;
+    margin-top: 1;
+    text-style: bold;
+}
+
+.shortcut-entry {
+    color: #cdd6f4;
+}
+
+#shortcuts-close-btn {
+    text-align: center;
+    width: 100%;
+    color: #a6adc8;
+    margin-top: 1;
+}
+
+
