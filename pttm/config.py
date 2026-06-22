@@ -2,7 +2,8 @@ import json
 import os
 import platformdirs
 
-CONFIG_PATH_ENV = "./pttm_config.json" # <-- only for dev, os.getenv("PTTM_CONFIG_PATH") is the real one
+# CONFIG_PATH_ENV = "./pttm_config.json" # <-- only for dev,
+CONFIG_PATH_ENV = os.getenv("PTTM_CONFIG_PATH")
 if CONFIG_PATH_ENV:
     CONFIG_FILE = CONFIG_PATH_ENV
 else:
