@@ -5,14 +5,18 @@ PTTM is a terminal-based Pomodoro app built with [Textual](https://textual.textu
 ## Features
 
 - Pomodoro timer with focus, short break, and long break modes
+- Audible ding sound on every mode transition (synthesised at first launch, cached as `ding.wav`)
 - Task list with per-task Pomodoro counts
 - Persistent configuration stored as JSON
-- Keyboard shortcuts for common timer and task actions
+- Keyboard shortcuts for all timer and task actions
 - In-app settings tab for adjusting timing values
+- **Auto-start next session** — optionally begin the next timer automatically when the current one ends
+- Full keyboard navigation in the Tasks and Settings tabs (arrow keys, Escape)
 
 ## Requirements
 
 - Python 3.10 or newer
+- `aplay` (ALSA/PipeWire) for audio — pre-installed on most Linux desktops
 
 ## Installation
 
@@ -40,26 +44,63 @@ pttm
 
 ## Keyboard Shortcuts
 
-- `q` quit
-- `s` start or pause the timer
-- `r` reset the current timer
-- `ctrl+r` reset the full session
-- `k` skip to the next timer mode
-- `f` switch to focus mode
-- `g` switch to short break mode
-- `b` switch to long break mode
-- `t` focus the new task input
-- `ctrl+p` show or hide the shortcuts screen
+### Global
+
+| Key | Action |
+| --- | --- |
+| `q` | Quit |
+| `Space` / `s` | Start or pause the timer |
+| `r` | Reset the current timer |
+| `Ctrl+R` | Reset the full session |
+| `k` | Skip to the next timer mode |
+| `f` | Switch to Focus mode |
+| `g` | Switch to Short Break mode |
+| `b` | Switch to Long Break mode |
+| `t` | Focus the new task input |
+| `Ctrl+P` | Show / hide the shortcuts overlay |
+| `Esc` | Focus the tab bar (from Tasks or Settings tab) |
+
+### Tasks tab
+
+| Key | Action |
+| --- | --- |
+| `↓` | Move focus to the next task (from input, enters the list) |
+| `↑` | Move focus to the previous task (from first task, returns to input) |
+| `Esc` | Return focus to the task input box |
+| `Space` / `Enter` | Toggle task completion |
+| `f` | Set task as the active Pomodoro target |
+| `e` | Rename task inline |
+| `d` | Delete task (returns focus to input) |
+
+### Settings tab
+
+| Key | Action |
+| --- | --- |
+| `↓` | Move focus to the next field |
+| `↑` | Move focus to the previous field |
+| `Enter` | Activate the focused button / toggle switch |
 
 ## Configuration
 
 The app reads and writes a JSON config file. By default, the file is stored in your user config directory. You can override the location by setting `PTTM_CONFIG_PATH` before launch.
-
-Example:
 
 ```bash
 export PTTM_CONFIG_PATH=./pttm_config.json
 pttm
 ```
 
-The config includes timer settings, completed focus session count, and task data.
+### Settings
+
+| Setting | Default | Description |
+| --- | --- | --- |
+| Focus session | 25 min | Length of each focus block |
+| Short break | 5 min | Length of a short break |
+| Long break | 15 min | Length of a long break |
+| Sessions before long break | 4 | How many focus sessions before a long break |
+| Auto-start next session | Off | Automatically begin the next timer when the current one ends |
+
+The config also persists the completed focus session count and all task data across launches.
+
+## Audio
+
+On first launch, PTTM synthesises a short bell-tone (`ding.wav`) using only Python's standard library and stores it next to the config file. From then on the cached file is reused directly — no re-synthesis, no network access, and no extra Python dependencies.

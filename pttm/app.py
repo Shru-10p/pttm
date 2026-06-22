@@ -11,13 +11,13 @@ from pttm.widgets.task_list_widget import TaskListWidget
 
 class PomodoroApp(App):
     CSS_PATH = "pttm.css"
-    TITLE = "TS PMO"
+    TITLE = "PTTM"
     COMMANDS = set()
     ENABLE_COMMAND_PALETTE = False
 
     BINDINGS = [
         ("q", "quit", "Quit"),
-        ("s", "toggle_timer", "Start/Pause"),
+        ("s,space", "toggle_timer", "Start/Pause"),
         ("r", "reset_timer", "Reset"),
         ("ctrl+r", "reset_session", "Reset Session"),
         ("k", "skip_timer", "Skip"),
@@ -26,6 +26,7 @@ class PomodoroApp(App):
         ("b", "set_mode_long", "Long Break"),
         ("t", "focus_todo_input", "Focus Todo"),
         ("ctrl+p", "toggle_shortcuts", "Shortcuts"),
+        ("escape", "focus_tab_bar", "Focus Tab Bar"),
     ]
 
     def __init__(self, **kwargs):
@@ -36,9 +37,9 @@ class PomodoroApp(App):
         log_dir = os.path.dirname(CONFIG_FILE)
         if log_dir:
             os.makedirs(log_dir, exist_ok=True)
-            log_file = os.path.join(log_dir, "pmo_startup.log")
+            log_file = os.path.join(log_dir, "pttm_startup.log")
         else:
-            log_file = "pmo_startup.log"
+            log_file = "pttm_startup.log"
         try:
             with open(log_file, "w") as f:
                 f.write(json.dumps(self.config, indent=4))
@@ -113,6 +114,16 @@ class PomodoroApp(App):
             self.pop_screen()
         else:
             self.push_screen(ShortcutsScreen())
+
+    def action_focus_tab_bar(self) -> None:
+        """Focus the tab bar when in the Tasks or Settings tab."""
+        try:
+            tabbed = self.query_one(TabbedContent)
+            if tabbed.active in ("tasks-tab", "settings-tab"):
+                from textual.widgets import Tabs
+                tabbed.query_one(Tabs).focus()
+        except Exception:
+            pass
 
     def action_reset_session(self) -> None:
         try:

@@ -3,6 +3,7 @@ from textual.widget import Widget
 from textual.app import ComposeResult
 from textual.widgets import Label, Input
 from textual.containers import Horizontal, VerticalScroll
+from textual import events
 from pttm.widgets.task_item import TaskItem
 from pttm.config import save_config
 
@@ -58,6 +59,8 @@ class TaskListWidget(Widget):
 
         self.app.update_active_task_display() #type: ignore
         self.refresh_tasks()
+        self.query_one("#new-task-input", Input).focus()
+
 
     def on_task_item_delete(self, event: TaskItem.Delete) -> None:
         if self.app.active_task_id == event.task_item.task_id: #type: ignore
@@ -68,6 +71,7 @@ class TaskListWidget(Widget):
 
         self.app.update_active_task_display() #type: ignore
         self.refresh_tasks()
+        self.query_one("#new-task-input", Input).focus()
 
     def on_task_item_rename(self, event: TaskItem.Rename) -> None:
         for task in self.app.config["tasks"]: #type: ignore
@@ -102,3 +106,18 @@ class TaskListWidget(Widget):
     def on_input_submitted(self, event: Input.Submitted) -> None:
         if event.input.id == "new-task-input":
             self.add_task()
+
+    def on_key(self, event: events.Key) -> None:
+        """Down arrow on the add-task input jumps to the first task item."""
+        if event.key == "down" and self.focused_child_is_input():
+            items = list(self.query(TaskItem))
+            if items:
+                event.stop()
+                items[0].focus()
+
+    def focused_child_is_input(self) -> bool:
+        """Return True when the new-task Input currently has focus."""
+        try:
+            return self.query_one("#new-task-input", Input).has_focus
+        except Exception:
+            return False

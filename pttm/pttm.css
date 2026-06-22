@@ -391,6 +391,20 @@ TaskItem.active-task .task-select-btn {
     border: solid #cba6f7;
 }
 
+.settings-row-switch {
+    height: 4;
+    align: left middle;
+}
+
+#settings-form Switch {
+    border: none;
+    background: transparent;
+}
+
+#settings-form Switch.-on .switch--slider {
+    color: #cba6f7;
+}
+
 #save-settings-btn {
     margin-top: 2;
     background: transparent;

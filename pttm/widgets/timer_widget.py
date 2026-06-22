@@ -4,6 +4,7 @@ from textual.widgets import Label, Static
 from textual.reactive import reactive
 from pttm.clock import make_clock_ascii
 from pttm.config import save_config
+from pttm.sound import play_ding
 
 MODE_CONFIG_KEYS = {
     "Focus": "focus_time",
@@ -72,9 +73,10 @@ class TimerWidget(Widget):
         # Terminal visual/audio beep
         print("\a", end="", flush=True)
 
-        self.transition_to_next()
+        self.transition_to_next(auto_start=True)
 
-    def transition_to_next(self) -> None:
+    def transition_to_next(self, auto_start: bool = False) -> None:
+        play_ding()
         if self.mode == "Focus":
             self.completed_focus_sessions += 1
             self.app.config["completed_focus_sessions"] = self.completed_focus_sessions #type: ignore
@@ -96,13 +98,14 @@ class TimerWidget(Widget):
             self.mode = "Focus"
             self.app.notify("Break finished! Time to start focusing.", title="Break Finished", severity="warning")
 
-        self.reset_timer_to_mode()
+        self.reset_timer_to_mode(auto_start=auto_start)
 
-    def reset_timer_to_mode(self) -> None:
+    def reset_timer_to_mode(self, auto_start: bool = False) -> None:
         key = MODE_CONFIG_KEYS[self.mode]
         minutes = self.app.config["settings"].get(key, 25) #type: ignore
         self.time_remaining = minutes * 60
-        self.is_running = False #type: ignore
+        should_auto_start = auto_start and self.app.config["settings"].get("auto_start_next", False) #type: ignore
+        self.is_running = should_auto_start #type: ignore
         self.update_controls()
 
     def update_controls(self) -> None:

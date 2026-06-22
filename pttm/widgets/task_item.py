@@ -6,20 +6,20 @@ from textual import events
 
 class TaskItem(Widget):
     """A widget representing a single task item."""
-    
+
     can_focus = True
-    
+
     class Toggle(Message):
         def __init__(self, task_item: "TaskItem", completed: bool):
             super().__init__()
             self.task_item = task_item
             self.completed = completed
-            
+
     class Select(Message):
         def __init__(self, task_item: "TaskItem"):
             super().__init__()
             self.task_item = task_item
-            
+
     class Delete(Message):
         def __init__(self, task_item: "TaskItem"):
             super().__init__()
@@ -42,16 +42,22 @@ class TaskItem(Widget):
     def compose(self) -> ComposeResult:
         check_char = "[x]" if self.completed else "[ ]"
         yield Label(check_char, classes="task-check-lbl")
-        
+
         title_cls = "task-title completed" if self.completed else "task-title"
         yield Label(self.title, classes=title_cls)
         yield Input(value=self.title, classes="task-edit-input hidden")
-        
+
         yield Label(f"({self.pomodoros})", classes="task-pomo")
 
     def on_key(self, event: events.Key) -> None:
         key = event.key
-        if key == "space":
+
+        # Don't intercept arrows / escape while the inline edit input is active
+        edit_input = self.query_one(".task-edit-input", Input)
+        if not edit_input.has_class("hidden"):
+            return
+
+        if key in ("space", "enter"):
             event.stop()
             self.completed = not self.completed
             self.post_message(self.Toggle(self, self.completed))
@@ -62,9 +68,23 @@ class TaskItem(Widget):
         elif key == "d":
             event.stop()
             self.post_message(self.Delete(self))
-        elif key in ("enter", "f"):
+        elif key == "f":
             event.stop()
             self.post_message(self.Select(self))
+        elif key == "down":
+            event.stop()
+            self.screen.focus_next(TaskItem)
+        elif key == "up":
+            event.stop()
+            # If this is the first TaskItem, jump back to the add-task input
+            items = list(self.screen.query(TaskItem))
+            if items and items[0] is self:
+                try:
+                    self.app.query_one("#new-task-input", Input).focus()
+                except Exception:
+                    pass
+            else:
+                self.screen.focus_previous(TaskItem)
 
     def refresh_task_display(self) -> None:
         try:
@@ -101,7 +121,7 @@ class TaskItem(Widget):
                 label = self.query_one(".task-title", Label)
                 label.update(self.title)
                 self.post_message(self.Rename(self, self.title))
-                
+
             self.query_one(".task-title", Label).remove_class("hidden")
             edit_input.add_class("hidden")
             self.focus()

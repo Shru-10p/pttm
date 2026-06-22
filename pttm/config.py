@@ -2,7 +2,7 @@ import json
 import os
 import platformdirs
 
-CONFIG_PATH_ENV = os.getenv("PTTM_CONFIG_PATH")
+CONFIG_PATH_ENV = "./pttm_config.json" # <-- only for dev, os.getenv("PTTM_CONFIG_PATH") is the real one
 if CONFIG_PATH_ENV:
     CONFIG_FILE = CONFIG_PATH_ENV
 else:
@@ -14,7 +14,8 @@ DEFAULT_CONFIG = {
         "focus_time": 25,
         "short_break_time": 5,
         "long_break_time": 15,
-        "long_break_interval": 4
+        "long_break_interval": 4,
+        "auto_start_next": False
     },
     "completed_focus_sessions": 0,
     "tasks": [
@@ -36,6 +37,8 @@ def load_config():
                     config["tasks"] = DEFAULT_CONFIG["tasks"]
                 if "completed_focus_sessions" not in config:
                     config["completed_focus_sessions"] = 0
+                if "auto_start_next" not in config["settings"]:
+                    config["settings"]["auto_start_next"] = False
                 return config
         except Exception:
             return DEFAULT_CONFIG.copy()
