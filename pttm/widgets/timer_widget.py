@@ -23,7 +23,7 @@ class TimerWidget(Widget):
         yield Label("FOCUS SESSION", id="timer-title")
         yield Label("No task active", id="active-task-display")
         yield Static(id="timer-clock")
-        yield Label("Completed: 0 sessions", id="session-count-display")
+        yield Label("", id="session-count-display")
 
     def on_mount(self) -> None:
         self.set_interval(1.0, self.tick)
@@ -36,7 +36,7 @@ class TimerWidget(Widget):
         # Force initial display updates
         self.watch_mode(self.mode)
         self.watch_time_remaining(self.time_remaining)
-        self.query_one("#session-count-display", Label).update(f"Completed: {self.completed_focus_sessions} sessions")
+        self.refresh_session_display()
 
     def watch_mode(self, mode: str) -> None:
         try:
@@ -82,7 +82,7 @@ class TimerWidget(Widget):
             self.app.config["completed_focus_sessions"] = self.completed_focus_sessions #type: ignore
             save_config(self.app.config) #type: ignore
 
-            self.query_one("#session-count-display", Label).update(f"Completed: {self.completed_focus_sessions} sessions")
+            self.refresh_session_display()
 
             if self.app.active_task_id: #type: ignore
                 self.app.increment_active_task_pomodoro() #type: ignore
@@ -107,6 +107,33 @@ class TimerWidget(Widget):
         should_auto_start = auto_start and self.app.config["settings"].get("auto_start_next", False) #type: ignore
         self.is_running = should_auto_start #type: ignore
         self.update_controls()
+
+    def interval_progress(self) -> tuple[int, int]:
+        """Return (sessions done in current interval, interval size)."""
+        interval = self.app.config["settings"].get("long_break_interval", 4) #type: ignore
+        done_in_interval = self.completed_focus_sessions % interval
+        return done_in_interval, interval
+
+    def refresh_session_display(self) -> None:
+        """Update the session-count label with pip-style interval progress and total."""
+        try:
+            done, total = self.interval_progress()
+            pips = ("● " * done) + ("○ " * (total - done))
+            grand_total = self.completed_focus_sessions
+            label_text = f"{pips.strip()}  {done} / {total}  ({grand_total} total)"
+            self.query_one("#session-count-display", Label).update(label_text)
+        except Exception:
+            pass
+
+    def reset_interval(self) -> None:
+        """Reset only the current interval's sessions (Ctrl+R)."""
+        interval = self.app.config["settings"].get("long_break_interval", 4) #type: ignore
+        # Roll back to the start of the current interval
+        sessions_in_interval = self.completed_focus_sessions % interval
+        self.completed_focus_sessions -= sessions_in_interval
+        self.app.config["completed_focus_sessions"] = self.completed_focus_sessions #type: ignore
+        save_config(self.app.config) #type: ignore
+        self.refresh_session_display()
 
     def update_controls(self) -> None:
         pass

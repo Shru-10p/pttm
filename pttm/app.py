@@ -129,14 +129,10 @@ class PomodoroApp(App):
         try:
             timer_widget = self.query_one(TimerWidget)
             timer_widget.is_running = False #type: ignore
-            timer_widget.completed_focus_sessions = 0
-            self.config["completed_focus_sessions"] = 0
-            save_config(self.config)
-
-            timer_widget.query_one("#session-count-display", Label).update("Completed: 0 sessions")
+            timer_widget.reset_interval()
             timer_widget.mode = "Focus"
             timer_widget.reset_timer_to_mode()
-            self.notify("Pomodoro session reset completely.", title="Session Reset", severity="information")
+            self.notify("Interval reset. Back to the start of this cycle.", title="Interval Reset", severity="information")
         except Exception:
             pass
 
@@ -181,8 +177,10 @@ class PomodoroApp(App):
     def on_settings_updated(self) -> None:
         try:
             timer_widget = self.query_one(TimerWidget)
-            if not timer_widget.is_running:
-                timer_widget.reset_timer_to_mode()
+            # Always reset — if running, this stops and resets to the new duration
+            timer_widget.reset_timer_to_mode()
+            # Reflect any change to long_break_interval in the pip display
+            timer_widget.refresh_session_display()
         except Exception:
             pass
 

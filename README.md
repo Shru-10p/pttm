@@ -10,7 +10,7 @@ PTTM is a terminal-based Pomodoro app built with [Textual](https://textual.textu
 - Persistent configuration stored as JSON
 - Keyboard shortcuts for all timer and task actions
 - In-app settings tab for adjusting timing values
-- **Auto-start next session** — optionally begin the next timer automatically when the current one ends
+- **Auto-start next timer** — optionally begin the next timer automatically when the current one ends
 - Full keyboard navigation in the Tasks and Settings tabs (arrow keys, Escape)
 
 ## Requirements
@@ -51,7 +51,7 @@ pttm
 | `q` | Quit |
 | `Space` / `s` | Start or pause the timer |
 | `r` | Reset the current timer |
-| `Ctrl+R` | Reset the full session |
+| `Ctrl+R` | Reset the current interval |
 | `k` | Skip to the next timer mode |
 | `f` | Switch to Focus mode |
 | `g` | Switch to Short Break mode |

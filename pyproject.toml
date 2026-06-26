@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pttm"
-version = "0.2.0"
-description = "Pomodoro Terminal Timer & Manager"
+version = "0.3.0"
+description = "Pomodoro Timer & Task Manager"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [

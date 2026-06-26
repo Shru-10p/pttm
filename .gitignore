@@ -19,5 +19,5 @@ venv/
 
 # PTTM runtime-generated files
 pttm_config.json
-pmo_startup.log
+pttm_startup.log
 ding.wav
